@@ -36,5 +36,7 @@ while( True ):
 					print "Command " + command + " succeeded"
 				else:
 					print "Command " + command + " failed"
+			else:
+				print "unknown command:",command
 	except KeyError:
 		print "No such VIRB. Known VIRBs:"
