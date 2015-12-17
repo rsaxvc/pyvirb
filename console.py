@@ -11,7 +11,7 @@ while( True ):
 	if( host == "q" ):
 		break
 	try:
-		simpleCommands = ["q","deviceInfo","snapPicture","startRecording","stopRecording","status"]
+		simpleCommands = ["q","deviceInfo","snapPicture","startRecording","stopRecording","status","features"]
 
 		v = virb.Virb(l[host])
 		while( True ):
@@ -21,6 +21,13 @@ while( True ):
 				)
 			if( command == "q"):
 				break
+			elif( command == "features" ):
+				r = v.command( command )
+				if( r["result"] ):
+					import pprint
+					pprint.PrettyPrinter(indent=3).pprint(r["features"])
+				else:
+					print "Unable to fetch features"
 			elif( command == "status" ):
 				r = v.command( command )
 				if( r["result"] ):
