@@ -5,20 +5,22 @@ class Virb:
 		import ipaddress
 		self.host = ipaddress.IPv4Address(host.address).exploded
 		self.url = 'http://'+self.host +'/virb'
+		self.session = requests.Session()
 
 	def status(self):
-		r = requests.post(self.url, data = '{"command":"deviceInfo"}')
-		print r.status_code
-		print r.content
+		r = self.session.post(self.url, data = '{"command":"deviceInfo"}')
+		if( r.status_code == 200 ):
+			return r.json()
+		return None
 
 	def startRecording(self):
-		r = requests.post(self.url, data='{"command":"startRecording"}')
+		r = self.session.post(self.url, data='{"command":"startRecording"}')
 		if( r.status_code == 200 ):
 			return self.parseResult(r)
 		return false
 
 	def stopRecording(self):
-		r = requests.post(self.url, data='{"command":"stopRecording"}')
+		r = self.session.post(self.url, data='{"command":"stopRecording"}')
 		if( r.status_code == 200 ):
 			return self.parseResult(r)
 		return false
