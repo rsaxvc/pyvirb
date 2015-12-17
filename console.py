@@ -11,30 +11,30 @@ while( True ):
 	if( host == "q" ):
 		break
 	try:
+		simpleCommands = ["q","deviceInfo","snapPicture","startRecording","stopRecording"]
+
 		v = virb.Virb(l[host])
 		while( True ):
 			command = input(
 				"Please select a command:\n"
-				"\tq\n"
-				"\tdeviceInfo\n"
-				"\tstartRecording\n"
-				"\tstopRecording\n"
+				"\t" + "\n\t".join(simpleCommands)+"\n"
 				)
 			if( command == "q"):
 				break
 			elif( command == "deviceInfo" ):
 				info = v.deviceInfo()
-				for item in info:
-					print "\t" + str(item) + ":" + str(info[item])
-			elif( command == "startRecording" ):
-				if( v.startRecording() ):
-					print "started recording.",
+				if( info["result"] ):
+					for device in info["deviceInfo"]:
+						print "deviceInfo:"
+						for item in device:
+							print "\t" + str(item) + ":" + str(device[item])
 				else:
-					print "failed to start recording.",
-			elif( command == "stopRecording" ):
-				if( v.stopRecording() ):
-					print "stopped recording.",
+					print "failed to fetch info"
+			elif( command in simpleCommands ):
+				r = v.command( command )
+				if( r["result"] ):
+					print "Command " + command + " succeeded"
 				else:
-					print "failed to stop recording.",
+					print "Command " + command + " failed"
 	except KeyError:
 		print "No such VIRB. Known VIRBs:"

@@ -10,28 +10,19 @@ class Virb:
 
 	def command(self,command):
 		d = {"command": command }
-		return self.session.post(self.url, data=json.dumps(d))
-
-	def deviceInfo(self):
-		r = self.command("deviceInfo")
+		r = self.session.post(self.url, data=json.dumps(d))
 		if( r.status_code == 200 ):
-			return r.json()["deviceInfo"][0]
+			return r.json()
 		return None
 
+	def deviceInfo(self):
+		return self.command("deviceInfo")
+
+	def snapPicture(self):
+		return self.command("snapPicture")
+
 	def startRecording(self):
-		r = self.command("startRecording")
-		if( r.status_code == 200 ):
-			return self.parseResult(r)
-		return false
+		return self.command("startRecording")
 
 	def stopRecording(self):
-		r = self.command("stopRecording")
-		if( r.status_code == 200 ):
-			return self.parseResult(r)
-		return false
-
-	def parseResult(self,r):
-		return r.json()["result"]
-
-	def sansa():
-		pass
+		return self.command("stopRecording")
