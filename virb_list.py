@@ -29,3 +29,7 @@ class VirbLister(object):
 		self.zeroconf.close();
 	def __getitem__(self,virb):
 		return self.listener.info(virb)
+	def __iter__(self):
+		return self.listener.virbs.__iter__()
+	def next(self):
+		return self.listener.virbs.next()
