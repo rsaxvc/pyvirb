@@ -16,11 +16,16 @@ while( True ):
 			command = input(
 				"Please select a command:\n"
 				"\tq\n"
+				"\tdeviceInfo\n"
 				"\tstartRecording\n"
 				"\tstopRecording\n"
 				)
 			if( command == "q"):
 				break
+			elif( command == "deviceInfo" ):
+				info = v.deviceInfo()
+				for item in info:
+					print "\t" + str(item) + ":" + str(info[item])
 			elif( command == "startRecording" ):
 				if( v.startRecording() ):
 					print "started recording.",

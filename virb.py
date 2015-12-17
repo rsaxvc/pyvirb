@@ -1,3 +1,4 @@
+import json
 import requests
 
 class Virb:
@@ -7,20 +8,24 @@ class Virb:
 		self.url = 'http://'+self.host +'/virb'
 		self.session = requests.Session()
 
-	def status(self):
-		r = self.session.post(self.url, data = '{"command":"deviceInfo"}')
+	def command(self,command):
+		d = {"command": command }
+		return self.session.post(self.url, data=json.dumps(d))
+
+	def deviceInfo(self):
+		r = self.command("deviceInfo")
 		if( r.status_code == 200 ):
-			return r.json()
+			return r.json()["deviceInfo"][0]
 		return None
 
 	def startRecording(self):
-		r = self.session.post(self.url, data='{"command":"startRecording"}')
+		r = self.command("startRecording")
 		if( r.status_code == 200 ):
 			return self.parseResult(r)
 		return false
 
 	def stopRecording(self):
-		r = self.session.post(self.url, data='{"command":"stopRecording"}')
+		r = self.command("stopRecording")
 		if( r.status_code == 200 ):
 			return self.parseResult(r)
 		return false
