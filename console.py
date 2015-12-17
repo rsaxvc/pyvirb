@@ -4,5 +4,32 @@ import virb
 from six.moves import input
 
 l = virb_list.VirbLister()
-host = input("Scanning for VIRBs. Please enter one...\n")
-v = virb.Virb(host)
+while( True ):
+	host = input("Scanning for VIRBs. Please enter one, q to quit...\n")
+	if( host == "q" ):
+		break
+	try:
+		print "host",host
+		print "lhost",l[host]
+		v = virb.Virb(l[host])
+		while( True ):
+			command = input(
+				"Please select a command:\n"
+				"\tq\n"
+				"\tstartRecording\n"
+				"\tstopRecording\n"
+				)
+			if( command == "q"):
+				break
+			elif( command == "startRecording" ):
+				if( v.startRecording() ):
+					print "started recording"
+				else:
+					print "failed to start recording"
+			elif( command == "stopRecording" ):
+				if( v.stopRecording() ):
+					print "stopped recording"
+				else:
+					print "failed to stop recording"
+	except KeyError:
+		print "No such VIRB"

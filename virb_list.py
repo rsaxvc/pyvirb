@@ -15,9 +15,11 @@ class VirbLister(object):
 			if( name not in self.virbs ):
 				self.virbs[name] = info
 				print("VIRB %s found" % (name,))
-		def virb_list(self):
+		def list(self):
 			for virb in self.virbs:
 				yield virb
+		def info(self,virb):
+			return self.virbs[virb]
 
 	def __init__(self):
 		self.zeroconf = Zeroconf()
@@ -25,3 +27,5 @@ class VirbLister(object):
 		self.browser = ServiceBrowser(self.zeroconf, self.virb_mdns_key, self.listener )
 	def __del__(self):
 		self.zeroconf.close();
+	def __getitem__(self,virb):
+		return self.listener.info(virb)
