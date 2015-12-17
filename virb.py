@@ -1,20 +1,12 @@
-import virb_list
+class Virb:
+	def __init__(self,host):
+		import requests
+		self.host = host
+		self.url = 'http://'+self.host+'/virb'
+		#{"command":"deviceInfo"}
+		r = requests.post(self.url, data = '{"command":"deviceInfo"}')
+		print r.status_code
+		print r.content
 
-from six.moves import input
-from zeroconf import ServiceBrowser, Zeroconf
-
-zeroconf = Zeroconf()
-virb_mdns_key = "_garmin-virb._tcp.local."
-browser = ServiceBrowser(zeroconf, virb_mdns_key, virb_list.VirbListener() )
-try:
-    virb = input("Scanning for VIRBs. Please enter one...\n")
-    if( virb_mdns_key not in virb ):
-        virb = virb + "." + virb_mdns_key
-    print virb
-finally:
-    zeroconf.close()
-
-
-
-
-
+	def sansa():
+		pass
