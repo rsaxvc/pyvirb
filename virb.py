@@ -26,3 +26,10 @@ class Virb:
 
 	def stopRecording(self):
 		return self.command("stopRecording")
+
+	def updateFeature(self,feature,value):
+		d = {"command":"updateFeature","feature":feature,"value":value }
+		r = self.session.post(self.url, data=json.dumps(d))
+		if( r.status_code == 200 ):
+			return r.json()
+		return None

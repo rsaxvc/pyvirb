@@ -24,8 +24,38 @@ while( True ):
 			elif( command == "features" ):
 				r = v.command( command )
 				if( r["result"] ):
-					import pprint
-					pprint.PrettyPrinter(indent=3).pprint(r["features"])
+					feature_list = {}
+					while( True ):
+						print "Please select a feature, or q to quit:"
+						for f in r["features"]:
+							if "value" in f:
+								print "\t" + f["feature"] + ":" + str(f["value"])
+							else:
+								print "\t" + f["feature"]
+							feature_list[f["feature"]] = f
+						feature = input()
+						if feature == "q":
+							break
+						elif feature in feature_list:
+							#print feature_list[feature]
+							if( "options" in feature_list[feature] ):
+								option_list = feature_list[feature]["options"]
+								while( True ):
+									option = input(
+										"Please select an option, or q to quit:\n"
+										"\t" + "\n\t".join(option_list)+"\n"
+										)
+									if option == "q":
+										break
+									elif option in option_list:
+										r = v.updateFeature(feature,option)
+										if( r["result"] ):
+											break
+									print "unknown option"
+							else:
+								print "no configurable options for " + feature
+						else:
+							print "Unable to fetch feature:",feature
 				else:
 					print "Unable to fetch features"
 			elif( command == "status" ):
