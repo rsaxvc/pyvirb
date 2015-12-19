@@ -1,8 +1,8 @@
 ## Synopsis
 
-PyVirb is a program and library for talking to Garmin VIRB cameras.
-The goal is to have two layers - one for finding cameras, and another
-for connecting to individual cameras identified on a network.
+PyVirb is a program and library for talking to Garmin VIRB cameras
+over WiFi. The goal is to have two layers - one for finding cameras,
+and another for connecting to individual cameras identified on a network.
 
 ## Code Example
 
@@ -20,6 +20,7 @@ TODO: add setup.py support
 ## API Reference
 
 VirbLister - use this to identify VIRBs over mDNS
+
 Virb - use this to talk to a VIRB
 
 ## Tests
