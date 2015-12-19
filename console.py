@@ -46,19 +46,24 @@ while( True ):
 						for f in r["features"]:
 							if "value" in f:
 								print "\t" + f["feature"] + ":" + str(f["value"])
+							elif "enabled" in f:
+								print "\t" + f["feature"] + ":" + str(f["enabled"])
 							else:
 								print "\t" + f["feature"]
 							feature_list[f["feature"]] = f
 						try:
-							feature = input()
+							feature_name = input()
 						except EOFError:
 							break
-						if feature == "q":
+						if feature_name == "q":
 							break
-						elif feature in feature_list:
+						elif feature_name in feature_list:
+							feature = feature_list[feature_name]
 							#print feature_list[feature]
-							if( "options" in feature_list[feature] ):
-								option_list = feature_list[feature]["options"]
+							if( feature["type"] == 2 ):
+								feature["options"] = ["0","1"]
+							if( "options" in feature ):
+								option_list = feature["options"]
 								while( True ):
 									try:
 										option = input(
@@ -70,14 +75,14 @@ while( True ):
 									if option == "q":
 										break
 									elif option in option_list:
-										r = v.updateFeature(feature,option)
+										r = v.updateFeature(feature_name,option)
 										if( r["result"] ):
 											break
 									print "unknown option"
 							else:
-								print "no configurable options for " + feature
+								print "no configurable options for " + feature_name
 						else:
-							print "Unable to fetch feature:",feature
+							print "Unable to fetch feature:", feature_name
 				else:
 					print "Unable to fetch features"
 			elif( command == "status" ):
