@@ -10,7 +10,8 @@ TODO.
 
 ## Motivation
 
-Garmin published the VIRB API, but I haven't seen any projects to use it.
+Garmin published the VIRB API, but I haven't seen any python libraries
+that use it yet.
 
 ## Installation
 
