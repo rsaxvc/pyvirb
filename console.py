@@ -7,7 +7,10 @@ l = virb_list.VirbLister()
 while( True ):
 	for v in l:
 		print "\t",v
-	host = input("Scanning for VIRBs. Please enter one, q to quit...\n")
+	try:
+		host = input("Scanning for VIRBs. Please enter one, q to quit...\n")
+	except EOFError:
+		break
 	if( host == "q" ):
 		break
 	try:
@@ -25,10 +28,13 @@ while( True ):
 
 		v = virb.Virb(l[host])
 		while( True ):
-			command = input(
-				"Please select a command:\n"
-				"\t" + "\n\t".join(simpleCommands)+"\n"
-				)
+			try:
+				command = input(
+					"Please select a command:\n"
+					"\t" + "\n\t".join(simpleCommands)+"\n"
+					)
+			except EOFError:
+				break
 			if( command == "q"):
 				break
 			elif( command == "features" ):
@@ -43,7 +49,10 @@ while( True ):
 							else:
 								print "\t" + f["feature"]
 							feature_list[f["feature"]] = f
-						feature = input()
+						try:
+							feature = input()
+						except EOFError:
+							break
 						if feature == "q":
 							break
 						elif feature in feature_list:
@@ -51,10 +60,13 @@ while( True ):
 							if( "options" in feature_list[feature] ):
 								option_list = feature_list[feature]["options"]
 								while( True ):
-									option = input(
-										"Please select an option, or q to quit:\n"
-										"\t" + "\n\t".join(option_list)+"\n"
-										)
+									try:
+										option = input(
+											"Please select an option, or q to quit:\n"
+											"\t" + "\n\t".join(option_list)+"\n"
+											)
+									except EOFError:
+										break
 									if option == "q":
 										break
 									elif option in option_list:
