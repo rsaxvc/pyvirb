@@ -15,6 +15,12 @@ class Virb:
 			return r.json()
 		return None
 
+	def found(self):
+		return self.command("found")
+
+	def locate(self):
+		return self.command("locate")
+
 	def deviceInfo(self):
 		return self.command("deviceInfo")
 

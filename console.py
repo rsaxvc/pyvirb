@@ -11,7 +11,17 @@ while( True ):
 	if( host == "q" ):
 		break
 	try:
-		simpleCommands = ["q","deviceInfo","snapPicture","startRecording","stopRecording","status","features"]
+		simpleCommands = [
+			"q",
+			"deviceInfo",
+			"found",
+			"locate",
+			"snapPicture",
+			"startRecording",
+			"stopRecording",
+			"status",
+			"features"
+			]
 
 		v = virb.Virb(l[host])
 		while( True ):
